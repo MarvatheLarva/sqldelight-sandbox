@@ -1,0 +1,53 @@
+services:
+  #cockroach-db:
+  #  container_name: cockroach-db
+  #  image: cockroachdb/cockroach:v23.2.3
+  #  environment:
+  #    COCKROACH_DATABASE: "CockroachDB"
+  #  command: start-single-node --insecure
+  #  ports:
+  #    - "26257:26257"
+  #    - "1984:8080"
+  #  networks:
+  #    - pos
+  #  volumes:
+  #    - "cockroachdb_data:/cockroach/cockroach-data"
+
+  mysql-db:
+    container_name: mysql-db
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: "MysqlDB"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    networks:
+      - pos
+    volumes:
+      - "mysqldb_data:/mysql/mysql-data"
+
+  postgres-db:
+    container_name: postgres-db
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    command: ["postgres", "-c", "log_statement=all"]
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: "PostgresDB"
+      POSTGRES_PASSWORD:
+    ports:
+      - "5432:5432"
+    networks:
+      - pos
+    volumes:
+      - "postgresdb_data:/postgres/postgres-data"
+networks:
+  pos:
+    driver: bridge
+
+volumes:
+  #cockroachdb_data:
+  mysqldb_data:
+  postgresdb_data:

@@ -1,0 +1,8 @@
+getAll:
+SELECT * FROM sale;
+
+insert:
+INSERT INTO sale VALUES :sale;
+
+truncate:
+TRUNCATE sale;
